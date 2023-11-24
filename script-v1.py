@@ -73,9 +73,9 @@ while index < len(produtos):  # Enquanto houver produtos na lista
         pyautogui.write(codigo_produto_atual)
         sleep(2)
         pyautogui.click(1568, 132)
-        sleep(3)
-        pyautogui.doubleClick(454, 574)
-        sleep(3)
+        sleep(4)
+        pyautogui.doubleClick(610, 544)
+        sleep(4)
 
         # Preencher o nome do produto atual
         pyautogui.click(791, 298)
@@ -141,24 +141,38 @@ while index < len(produtos):  # Enquanto houver produtos na lista
         sleep(2)
 
         # Após fechar a tela de componentes, fechar o produto
-        pyautogui.click(955, 560)
         pyautogui.press("esc")
         sleep(2)
         pyautogui.press("enter")
-        sleep(10)
-        
+        contador = 1
+        start_time = time()
         while True:
             active_window_title = pyautogui.getActiveWindowTitle()
-            if "Não está respondendo" in active_window_title:
-                print("Não está respondendo. Aguardando...")
-                sleep(2)
+            if "Produto" in active_window_title:
+                print(f"Aguarde o erro no sistema. Aguardando... {contador} segundos")
+                contador += 1
+                if time() - start_time > 2400:
+                    print("Erro no sistema. Encerrando o script")
+                    break
+
+                sleep(1)
             else:
+                sleep(3)
                 break
+
+        """ while True:
+            active_window_title = pyautogui.getActiveWindowTitle()
+            if "Produto (Não está respondendo)" in active_window_title:
+                print("Não está respondendo. Aguardando...")
+                sleep(1)
+            else:
+                break """
         sleep(2)
         pyautogui.click(955, 560)
         sleep(2)
 
         pyautogui.press("esc")
+        sleep(2)
 
         # Após concluir as ações para o produto atual, atualize o índice para o próximo produto
         index += 1
